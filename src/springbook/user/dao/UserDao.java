@@ -5,10 +5,15 @@ import springbook.user.domain.User;
 import java.sql.*;
 
 public class UserDao {
+
+    private static String dburl = "jdbc:mysql://localhost:3306/Toby";
+    private static String dbUser = "root";
+    private static String dbpasswd = "password";
+
     public void add(User user) throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
-        Connection c = DriverManager.getConnection(
-                "jdbc:mysql://localhsot/Toby");
+        Connection c = DriverManager.getConnection(dburl, dbUser, dbpasswd);
+
         PreparedStatement ps = c.prepareStatement(
                 "insert into users(id, name, password) values(?,?,?)");
         ps.setString(1, user.getId());
@@ -23,8 +28,7 @@ public class UserDao {
 
     public User get(String id) throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
-        Connection c= DriverManager.getConnection(
-                "jdbc:mysql://localhost/Toby");
+        Connection c = DriverManager.getConnection(dburl, dbUser, dbpasswd);
 
         PreparedStatement ps = c.prepareStatement(
                 "select * from users where id = ?");
